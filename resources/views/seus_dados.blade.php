@@ -1,18 +1,14 @@
 @extends('template')
 
-@section('titulo','Extrato')
+@section('titulo','Seus Dados')
 
 @section('conteudo')
 <header class="text-center">
-    EXTRATO - Saldo: R$ 9.9999,00
+    SEUS DADOS
 </header>
 <div class="row">
-    
-    <div class="col-md-6 p-3">
-        <h2>Receitas</h2>
-    </div>
-    <div class="col-md-6 p-3">
-        <h2>Despesas</h2>
+    <div class="col-md-12 p-3">
+        <h2>Olá Fulano</h2>
     </div>
 </div>
 @endsection

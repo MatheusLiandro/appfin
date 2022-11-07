@@ -27,13 +27,13 @@
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Seus dados</a>
+                    <a class="nav-link active" aria-current="page" href="{{route('seus_dados')}}">Seus dados</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Extrato</a>
+                    <a class="nav-link" href="{{route('extrato')}}">Extrato</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Nova entrada</a>
+                    <a class="nav-link" href="{{route('nova_entrada')}}">Nova entrada</a>
                 </li>
                 @yield('nav-complementar')
             </ul>
