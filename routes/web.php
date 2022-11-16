@@ -14,13 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/', function () {
+    return view('auth.login');
+});
+
 /////////////////Rotas Para Usuário Logado
 
 //Rota extrato(somente se usuário estiver logado)
 Route::get('/extrato', function () {
     return view('extrato');
 })->name('extrato');
-
 
 //Rota Seuas dados
 Route::get('/seus_dados', function () {
@@ -37,3 +40,13 @@ Route::get('/seus_gastos', function () {
     return view('seus_gastos');
 })->name('seus_gastos');
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
