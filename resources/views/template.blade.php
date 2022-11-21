@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
-    <title>App Fin | @yield('titulo')</title>
+    <title>AppFin | @yield('titulo')</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,40 +10,50 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
 <body>
     <main class="row">
-
-        <div class="col-md-3 p-4 bg-warning vh-100">
+        <div class="col-md-3 bg-warning vh-100">            
             <div class="text-center">
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-user"></i>                
                 <p class="text-center fw-bold">
-                    Olá Fulano
-
+                    Olá <?php $user = auth()->user(); echo $user->name; ?> 
+                    <br>
+                    email: <?php echo $user->email; ?> 
                 </p>
             </div>
+
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('seus_dados')}}">Seus dados</a>
+                    <a class="nav-link" href="">Seus Dados</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('extrato')}}">Extrato</a>
+                    <a class="nav-link" href="{{ route('extrato') }}">Extrato</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('nova_entrada')}}">Nova entrada</a>
+                    <a class="nav-link" href="{{ route('nova_entrada') }}">Nova Entrada</a>
                 </li>
                 @yield('nav-complementar')
+                <li class="nav-item">
+                    <form method="POST" action="{{route('logout')}}">
+                        @csrf
+                        <a class="nav-link" href="{{ route('logout') }}" 
+                            onclick="event.preventDefault();
+                            this.closest('form').submit(); ">
+                            SAIR
+                        </a>
+                    </form>
+                </li>
             </ul>
         </div>
-        <div class="col-md-9 p-4">
+        <div class="col-md-9">
             @yield('conteudo')
         </div>
 
     </main>
-
 
 
     <!-- Bootstrap JavaScript Libraries -->

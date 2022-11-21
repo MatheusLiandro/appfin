@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('fin_movimentos',function( Blueprint $table){
+        Schema::create('fin_movimentos', function (Blueprint $table) {
             $table->id();
             $table->text('descricao');
-            $table->float('valor',12 ,2);
+            $table->float('valor', 12, 2);
             $table->string('tipo');
             $table->timestamps();
-
         });
     }
 
@@ -31,7 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
         Schema::dropIfExists('fin_movimentos');
     }
 };

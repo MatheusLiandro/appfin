@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MovimentoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,32 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', function () {
     return view('auth.login');
 });
 
-/////////////////Rotas Para Usuário Logado
+///////////// ROTAS PARA USUÁRIO LOGADO
 
-//Rota extrato(somente se usuário estiver logado)
-Route::get('/extrato', function () {
-    return view('extrato');
-})->name('extrato');
 
-//Rota Seuas dados
-Route::get('/seus_dados', function () {
-    return view('seus_dados');
-})->name('seus_dados');
-
-//Rota Nova entrada - cadastro de receita ou despesa
-Route::get('/nova_entrada', function () {
-    return view('nova_entrada');
-})->name('nova_entrada');
-
-//Rota Seus gastos - Gráfico de despesas x receitas
-Route::get('/seus_gastos', function () {
-    return view('seus_gastos');
-})->name('seus_gastos');
 
 
 Route::middleware([
@@ -46,7 +28,27 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    //Rota extrato
+    Route::get('/extrato',[MovimentoController::class, 'get_movimentos'])->name('extrato');
+
+    //Rota Seus Dados
+    Route::get('/seus_dados', function () {
+        return view('seus_dados');
+    }
+    )->name('seus_dados');
+
+    //Rota Nova Entrada - cadastro de receita ou despesa
+    Route::get('/nova_entrada', function () {
+        return view('nova_entrada');
+    }
+    )->name('nova_entrada');
+
+    //Rota Seus Gastos - Gráfico de despesas X receitas
+    Route::get('/seus_gastos', function () {
+        return view('seus_gastos');
+    }
+    )->name('seus_gastos');
+    
+    //Rota para inserção no BD dos movimentos
+    Route::post('/processa', [MovimentoController::class, 'gravar'])->name('processa');
 });
