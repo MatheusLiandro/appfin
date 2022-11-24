@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('fin_movimentos', function (Blueprint $table) {
-            $table->id();
+            $table->id();          
             $table->text('descricao');
             $table->float('valor', 12, 2);
             $table->string('tipo');

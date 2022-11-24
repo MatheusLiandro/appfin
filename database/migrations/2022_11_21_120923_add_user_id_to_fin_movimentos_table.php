@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::table('fin_movimentos', function (Blueprint $table) {
             //
             $table->foreignId('user_id')->constrained();
-
         });
     }
 

@@ -8,39 +8,32 @@ use App\Models\Fin_movimento;
 
 class MovimentoController extends Controller
 {
-    // Carrega os movimentos do Usuário logado
-
+    //Carrega os movimentos do usuário logado
     public function get_movimentos(){
         $user_id = auth()->user()->id;
-        //load registros onde o tipo=receita e user_id=$user_id
+        //Load registros onde o tipo=receita e user_id=$user_id
         $receitas = Fin_movimento::where('user_id', $user_id)->where('tipo', 'receita')->get();
-        $despesas = Fin_movimento::where('user_id', $user_id)->where('tipo', 'despesa')->get(); 
-        $totReceitas = $receitas-> sum('valor');
-        $totDespesas = $despesas-> sum('valor');
-        
+        $despesas = Fin_movimento::where('user_id', $user_id)->where('tipo', 'despesa')->get();
+        $totReceitas = $receitas->sum('valor');
+        $totDespesas = $despesas->sum('valor');
 
         $parametros = [
-            'totDespesas' => $totDespesas,
-            'totReceitas' => $totReceitas,
-            'receitas' => $receitas,
+            'totDespesas' => $totDespesas, 
+            'totReceitas' => $totReceitas, 
+            'receitas' => $receitas, 
             'despesas' => $despesas
         ];
 
-
-        // carrega a VIEW extrato enviando as variaveois $despesas e $receitas
-        return view('extrato', $parametros); 
+        //carrega a VIEW extrato enviando as variáveis $despesas e $receitas
+        return view('extrato', $parametros);
     }
-    
-    
-    
     
     
     //Método gravar para armazenar o movimento
     public function gravar(Request $request){
-        // dd($request);
-        // Instancia a tebela fin_movimentos
-        // $movimentos representa a tabela e
-        // $request representa os campos do formulario
+        //Instancia a tabela fin_movimentos
+        //$movimento representa a tabela e 
+        //$request representa os campos do formulário
         $movimento = new Fin_movimento;
 
         $movimento->user_id = auth()->user()->id;
@@ -49,8 +42,28 @@ class MovimentoController extends Controller
         $movimento->valor = $request->valor;
 
         $movimento->save();
-       
-        // Apos gravar os dados , redireciona para rota "extrato"
+
+        //Após gravar os dados, redireciona para a rota "extrato"
+        return redirect('extrato');
+    }
+
+    //Carrega o formulário de edição com os dados do registro
+    public function get_movimento($id){
+        //Carrega o movimento onde o id = $id
+        $movimento = Fin_movimento::findOrFail($id);
+
+        return view('form_atualiza', ['movimento' => $movimento]);
+    }
+
+    public function atualizar(Request $request){
+        Fin_movimento::findOrFail($request->id)->update($request->all());
+
+        return redirect('extrato');
+    }
+
+    public function deletar($id){
+        Fin_movimento::findOrFail($id)->delete();
+
         return redirect('extrato');
     }
 }
